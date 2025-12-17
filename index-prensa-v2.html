@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>PRENSA Obra Social - Prototipos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      /* Colores alineados al logo PRENSA (teal + verde lima) */
+      --teal-main: #00757b;
+      --teal-dark: #004b50;
+      --teal-soft: #169199;
+      --lime: #b4d52d;
+      --bg-page: #e5edf0;
+      --card-bg: #ffffff;
+      --accent-btn: #00757b;
+      --accent-btn-hover: #004b50;
+      --danger: #d62828;
+      --danger-soft: #fbe2e2;
+      --warning: #f1c40f;
+      --warning-soft: #fff7cc;
+      --text-main: #1f2933;
+      --text-soft: #4b5563;
+      --shadow-soft: 0 16px 40px rgba(0, 0, 0, 0.12);
+      --radius-lg: 12px;
+      --radius-xl: 18px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background: radial-gradient(circle at top left, #00929a 0, #00444c 55%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+      color: var(--text-main);
+    }
+
+    #app-shell {
+      width: 100%;
+      max-width: 1440px;
+      background: var(--bg-page);
+      border-radius: 22px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER INSTITUCIONAL */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 26px 12px;
+      background: #ffffff;
+      border-bottom: 1px solid #d1d5db;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-img {
+      height: 54px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+    }
+
+    .brand-text span:first-child {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+    }
+
+    .brand-text span:last-child {
+      font-weight: 500;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .header-title {
+      margin-left: 24px;
+      padding-left: 18px;
+      border-left: 2px solid rgba(15, 118, 110, 0.35);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--teal-dark);
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .user-area strong {
+      font-weight: 600;
+      color: var(--teal-dark);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.35);
+    }
+
+    /* NAV / MENÚ ENTRE PROTOTIPOS */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 26px;
+      background: linear-gradient(90deg, var(--teal-dark), var(--teal-main));
+      color: #e5e7eb;
+    }
+
+    .nav-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.9;
+    }
+
+    .screen-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .screen-tab {
+      border-radius: 999px;
+      border: none;
+      padding: 6px 14px;
+      font-size: 13px;
+      background: transparent;
+      color: #e5e7eb;
+      cursor: pointer;
+      transition: background var(--transition-fast),
+        transform 0.1s, color var(--transition-fast);
+      border: 1px solid transparent;
+    }
+
+    .screen-tab.active {
+      background: #f9fafb;
+      color: var(--teal-dark);
+      border-color: rgba(15, 23, 42, 0.08);
+      font-weight: 600;
+    }
+
+    .screen-tab:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    main {
+      padding: 18px 26px 24px;
+      flex: 1;
+      display: flex;
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .screen-layout {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      grid-column-gap: 28px;
+      grid-row-gap: 20px;
+      align-items: flex-start;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .left-panel {
+      font-size: 13px;
+      border-right: 1px solid #e5e7eb;
+      padding-right: 18px;
+    }
+
+    .left-panel h2 {
+      margin: 0 0 18px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--teal-dark);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    select,
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      padding: 7px 9px;
+      font-size: 13px;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--text-main);
+      transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+    }
+
+    select:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--teal-soft);
+      box-shadow: 0 0 0 2px rgba(14, 116, 144, 0.15);
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field small.error-inline {
+      color: var(--danger);
+      font-size: 11px;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .caption {
+      font-size: 12px;
+      margin-top: 10px;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+
+    /* BUSCADOR Y CARRUSEL */
+    .right-top-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      width: 260px;
+      border: 1px solid #d1d5db;
+    }
+
+    .search-box span {
+      font-size: 14px;
+      margin-right: 6px;
+      opacity: 0.6;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 3px 4px;
+      font-size: 13px;
+      width: 100%;
+      background: transparent;
+      color: var(--text-main);
+    }
+
+    .search-box input::placeholder {
+      color: #9ca3af;
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .carousel-arrow {
+      width: 30px;
+      height: 112px;
+      border-radius: 999px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--lime);
+      color: var(--teal-dark);
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast), background var(--transition-fast);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.16);
+      flex-shrink: 0;
+    }
+
+    .carousel-arrow:hover {
+      transform: translateY(-2px);
+      background: #ddef70;
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.24);
+    }
+
+    .carousel-track-viewport {
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      transition: transform 0.3s ease-out;
+    }
+
+    .doctor-card {
+      width: 138px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 8px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 10px 18px rgba(148, 163, 184, 0.25);
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast), border-color 0.1s;
+    }
+
+    .doctor-card img {
+      width: 100%;
+      height: 86px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 6px;
+    }
+
+    .doctor-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-main);
+      margin-bottom: 2px;
+      text-decoration: underline;
+      text-align: center;
+    }
+
+    .doctor-specialty {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .doctor-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 26px rgba(148, 163, 184, 0.35);
+      border-color: #cbd5e1;
+    }
+
+    .doctor-card.selected {
+      border-color: var(--teal-main);
+      box-shadow: 0 0 0 2px rgba(34, 197, 235, 0.35),
+        0 18px 30px rgba(15, 118, 110, 0.35);
+    }
+
+    /* FILA INFERIOR CU01 / CU02 */
+    .bottom-row-cu01,
+    .bottom-row-cu02 {
+      display: grid;
+      grid-template-columns: minmax(260px, 330px) minmax(260px, 1.2fr) minmax(
+          0,
+          260px
+        );
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .map-box {
+      background: #f1f5f9;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .map-visual {
+      background: #ffffff;
+      border-radius: 10px;
+      height: 150px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+
+    .map-visual iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .map-address {
+      font-size: 12px;
+      padding: 2px 0;
+      color: var(--text-soft);
+    }
+
+    .btn {
+      border-radius: 8px;
+      border: none;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: var(--accent-btn);
+      color: #ffffff;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.25);
+      transition: background var(--transition-fast), transform 0.12s,
+        box-shadow var(--transition-fast);
+    }
+
+    .btn:hover {
+      background: var(--accent-btn-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.3);
+    }
+
+    .btn.secondary {
+      background: #ffffff;
+      color: var(--teal-dark);
+      box-shadow: none;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn.secondary:hover {
+      background: #f3f4f6;
+    }
+
+    .buttons-inline {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .selected-provider-text {
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .selected-provider-text span {
+      font-weight: 600;
+    }
+
+    .confirmation-box {
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #ecfdf5;
+      color: #065f46;
+      font-size: 13px;
+      border: 1px solid #6ee7b7;
+      box-shadow: 0 12px 22px rgba(22, 163, 74, 0.18);
+      align-self: flex-end;
+      max-width: 260px;
+    }
+
+    .confirmation-box strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .confirmation-box.warning {
+      background: var(--warning-soft);
+      color: #854d0e;
+      border-color: #facc15;
+    }
+
+    /* CU02: formulario y calendario */
+    .appointment-form {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+
+    .calendar-widget {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 10px;
+      border: 1px solid #e5e7eb;
+      min-width: 220px;
+      color: var(--text-main);
+      font-size: 12px;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--teal-dark);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day,
+    .calendar-weekday {
+      text-align: center;
+      padding: 4px 0;
+      border-radius: 6px;
+    }
+
+    .calendar-weekday {
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    .calendar-day {
+      cursor: pointer;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      font-size: 11px;
+    }
+
+    .calendar-day:hover {
+      background: #e0f2fe;
+    }
+
+    .calendar-day.selected {
+      background: var(--accent-btn);
+      color: #eff6ff;
+      border-color: var(--accent-btn);
+      font-weight: 600;
+    }
+
+    /* MENSAJES: barra superior y overlay central */
+    .top-message {
+      position: relative;
+      margin-bottom: 12px;
+      padding: 8px 40px 8px 42px;
+      background: var(--danger);
+      color: #ffffff;
+      font-size: 13px;
+      border-radius: 999px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 24px rgba(220, 38, 38, 0.35);
+    }
+
+    .top-message.visible {
+      display: inline-flex;
+    }
+
+    .top-message .icon {
+      position: absolute;
+      left: 14px;
+      font-size: 16px;
+    }
+
+    .top-message .close {
+      position: absolute;
+      right: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    .overlay-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+    }
+
+    .overlay-backdrop.visible {
+      display: flex;
+    }
+
+    .overlay-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px 22px 20px;
+      max-width: 580px;
+      width: 88%;
+      box-shadow: 0 24px 50px rgba(15, 23, 42, 0.45);
+      color: var(--text-main);
+      position: relative;
+      text-align: left;
+      font-size: 14px;
+      border-top: 4px solid var(--danger);
+    }
+
+    .overlay-card .close {
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #4b5563;
+    }
+
+    .overlay-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: var(--danger);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+
+    .overlay-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .overlay-body {
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    /* CU03 tabla y paginación */
+    .screen-cu03 .screen-layout {
+      grid-template-columns: 260px minmax(0, 1fr);
+    }
+
+    .audit-filters {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: var(--text-soft);
+    }
+
+    .audit-filters .spacer {
+      flex: 1;
+    }
+
+    .audit-select {
+      min-width: 200px;
+    }
+
+    .audit-search {
+      width: 260px;
+    }
+
+    .table-wrapper {
+      background: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      color: #111827;
+    }
+
+    thead {
+      background: #f3f4f6;
+    }
+
+    th,
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    tbody tr:hover {
+      background: #eff6ff;
+    }
+
+    .audit-options a {
+      margin-right: 6px;
+      color: var(--accent-btn);
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 12px;
+    }
+
+    .pager {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px 12px;
+      background: #f9fafb;
+      color: #4b5563;
+      font-size: 13px;
+    }
+
+    .pager button {
+      border-radius: 999px;
+      border: none;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      background: #ffffff;
+      color: #111827;
+      min-width: 28px;
+      border: 1px solid #e5e7eb;
+      transition: background var(--transition-fast),
+        transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .pager button:hover {
+      background: #e5e7eb;
+      border-color: #d1d5db;
+      transform: translateY(-1px);
+    }
+
+    .pager button.current {
+      background: var(--teal-main);
+      color: #f9fafb;
+      border-color: var(--teal-main);
+      font-weight: 600;
+    }
+
+    .pager button.secondary {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    #cu03-db-error-overlay {
+      position: absolute;
+    }
+
+    /* RESPONSIVE como apoyo (sigue siendo pensado para escritorio) */
+    @media (max-width: 1100px) {
+      .screen-layout {
+        grid-template-columns: 230px minmax(0, 1fr);
+      }
+
+      .bottom-row-cu01,
+      .bottom-row-cu02 {
+        grid-template-columns: minmax(230px, 1.1fr) minmax(230px, 1.1fr);
+        grid-template-rows: auto auto;
+      }
+
+      .bottom-row-cu01 > :last-child,
+      .bottom-row-cu02 > :last-child {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 12px;
+      }
+      .screen-layout {
+        grid-template-columns: 1fr;
+      }
+      .left-panel {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+      }
+      .screen-cu03 .screen-layout {
+        grid-template-columns: 1fr;
+      }
+      .bottom-row-cu01,
+      .bottom-row-cu02 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app-shell">
+    <!-- Overlay genérico -->
+    <div id="global-overlay" class="overlay-backdrop">
+      <div class="overlay-card">
+        <div class="close" data-overlay-close>&times;</div>
+        <div style="display:flex;align-items:flex-start;margin-bottom:6px;">
+          <div class="overlay-icon">!</div>
+          <div>
+            <div class="overlay-title" id="overlay-title"></div>
+            <div class="overlay-body" id="overlay-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-left">
+        <!-- Usa tu logo real: guardá la imagen como logo-prensa.png junto al index.html -->
+        <img src="logo-prensa.png" alt="PRENSA Obra Social" class="logo-img" />
+        <div class="brand-text">
+          <span>PRENSA</span>
+          <span>OBRA SOCIAL</span>
+        </div>
+        <div id="header-title" class="header-title" aria-live="polite"></div>
+      </div>
+      <div class="user-area">
+        <span>Bienvenido,</span>
+        <strong id="greeting-name">[Afiliado]</strong>
+        <span>!</span>
+        <div class="user-avatar">👤</div>
+      </div>
+    </header>
+
+    <!-- MENÚ / NAV ENTRE PANTALLAS -->
+    <nav class="nav-bar">
+      <div class="nav-title">MÓDULOS DEL SISTEMA</div>
+      <div class="screen-tabs">
+        <button class="screen-tab active" data-screen-target="cu01">
+          CU01 · Orden de Consulta
+        </button>
+        <button class="screen-tab" data-screen-target="cu02">
+          CU02 · Turno Médico
+        </button>
+        <button class="screen-tab" data-screen-target="cu03">
+          CU03 · Auditoría Médica
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <!-- CU01 -->
+      <section
+        id="screen-cu01"
+        class="screen active screen-cu01"
+        aria-label="Solicitud de Orden de Consulta"
+      >
+        <div class="screen-layout">
+          <div class="left-panel">
+            <h2>Solicitud de Orden de Consulta</h2>
+
+            <div class="field">
+              <label for="cu01-beneficiario">Seleccionar beneficiario</label>
+              <select id="cu01-beneficiario">
+                <option value="af1">Afiliado 1</option>
+                <option value="no-elegible">
+                  Afiliado no elegible (simulador)
+                </option>
+                <option value="orden-vigente">
+                  Afiliado con orden vigente (simulador)
+                </option>
+                <option value="pendiente-auditoria">
+                  Afiliado sujeto a auditoría (simulador)
+                </option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="cu01-especialidad">Seleccionar la especialidad</label>
+              <select id="cu01-especialidad">
+                <option value="">Sin Seleccionar</option>
+                <option value="odontologia">Odontología</option>
+                <option value="pediatria">Pediatría</option>
+                <option value="medica-general">Médica General</option>
+                <option value="neurologia">Neurología</option>
+                <option value="cirugia">Cirugía</option>
+                <option value="error-sistema">Simular error del sistema</option>
+              </select>
+            </div>
+
+            <div class="caption">Especialistas disponibles con tu plan:</div>
+          </div>
+
+          <div>
+            <!-- barra de error superior CU01 -->
+            <div id="cu01-top-message" class="top-message" aria-live="assertive">
+              <span class="icon">✖</span>
+              <span id="cu01-top-message-text"></span>
+              <span class="close" data-close="#cu01-top-message">&times;</span>
+            </div>
+
+            <div class="right-top-row">
+              <span>Buscar especialista:</span>
+              <div class="search-box">
+                <span>🔍</span>
+                <input id="cu01-search" type="text" placeholder="Search" />
+              </div>
+            </div>
+
+            <!-- Carrusel CU01 -->
+            <div class="carousel-wrapper">
+              <button class="carousel-arrow" id="cu01-prev" aria-label="Anterior">
+                ‹
+              </button>
+              <div class="carousel-track-viewport">
+                <div class="carousel-track" id="cu01-carousel-track"></div>
+              </div>
+              <button class="carousel-arrow" id="cu01-next" aria-label="Siguiente">
+                ›
+              </button>
+            </div>
+
+            <!-- fila inferior CU01 -->
+            <div class="bottom-row-cu01">
+              <div class="map-box">
+                <div class="map-visual">
+                  <iframe
+                    id="cu01-map-iframe"
+                    src="https://www.google.com/maps?q=San%20Miguel%20de%20Tucum%C3%A1n,%20Tucum%C3%A1n&output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+                <div class="map-address" id="cu01-map-address">
+                  [ Dirección del Prestador Seleccionado ]
+                </div>
+                <button class="btn secondary" id="cu01-map-refresh">
+                  Actualizar mapa
+                </button>
+              </div>
+
+              <div>
+                <div class="selected-provider-text">
+                  Prestador seleccionado:
+                  <span id="cu01-selected-provider">[ Nombre prestador ]</span>
+                </div>
+                <div class="buttons-inline">
+                  <button class="btn secondary" id="cu01-cancelar">
+                    Cancelar
+                  </button>
+                  <button class="btn" id="cu01-confirmar">
+                    Confirmar Orden
+                  </button>
+                </div>
+              </div>
+
+              <div
+                id="cu01-confirmation-container"
+                style="display:flex;justify-content:flex-end;"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CU02 -->
+      <section
+        id="screen-cu02"
+        class="screen screen-cu02"
+        aria-label="Solicitud de Turno Médico"
+      >
+        <div class="screen-layout">
+          <div class="left-panel">
+            <h2>Solicitud de Turno Centro Médico</h2>
+
+            <div class="field">
+              <label for="cu02-beneficiario">Seleccionar beneficiario</label>
+              <select id="cu02-beneficiario">
+                <option value="af1">Afiliado 1</option>
+                <option value="af2">Afiliado 2</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="cu02-especialidad">Seleccionar la especialidad</label>
+              <select id="cu02-especialidad">
+                <option value="">Sin Seleccionar</option>
+                <option value="odontologia">Odontología</option>
+                <option value="gastro">Gastroenterología</option>
+                <option value="pediatria">Pediatría</option>
+                <option value="psicologia">Psicología</option>
+                <option value="error-sistema">Simular error del sistema</option>
+              </select>
+            </div>
+
+            <div class="caption">Especialistas disponibles con tu plan:</div>
+          </div>
+
+          <div>
+            <!-- barra de error superior CU02 -->
+            <div id="cu02-top-message" class="top-message" aria-live="assertive">
+              <span class="icon">✖</span>
+              <span id="cu02-top-message-text"></span>
+              <span class="close" data-close="#cu02-top-message">&times;</span>
+            </div>
+
+            <div class="right-top-row">
+              <span>Buscar especialista:</span>
+              <div class="search-box">
+                <span>🔍</span>
+                <input id="cu02-search" type="text" placeholder="Search" />
+              </div>
+            </div>
+
+            <!-- Carrusel CU02 -->
+            <div class="carousel-wrapper">
+              <button class="carousel-arrow" id="cu02-prev" aria-label="Anterior">
+                ‹
+              </button>
+              <div class="carousel-track-viewport">
+                <div class="carousel-track" id="cu02-carousel-track"></div>
+              </div>
+              <button class="carousel-arrow" id="cu02-next" aria-label="Siguiente">
+                ›
+              </button>
+            </div>
+
+            <!-- fila inferior CU02 -->
+            <div class="bottom-row-cu02">
+              <div class="map-box">
+                <div class="map-visual">
+                  <iframe
+                    id="cu02-map-iframe"
+                    src="https://www.google.com/maps?q=Centro%20M%C3%A9dico%20Prensa%20Junin%20754%20San%20Miguel%20de%20Tucum%C3%A1n&output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+                <div class="map-address">
+                  Centro Médico Prensa, Junin 754, SMT, TUC.
+                </div>
+              </div>
+
+              <div class="appointment-form">
+                <div class="selected-provider-text">
+                  Prestador seleccionado:
+                  <span id="cu02-selected-provider">[ Nombre prestador ]</span>
+                </div>
+
+                <div class="field">
+                  <label for="cu02-fecha">Seleccione fecha del turno</label>
+                  <input type="date" id="cu02-fecha" />
+                  <small
+                    class="error-inline"
+                    id="cu02-fecha-error"
+                    style="display:none;"
+                    >*Fecha no seleccionada*</small
+                  >
+                </div>
+
+                <div class="field">
+                  <label for="cu02-horario">Ver Horarios Disponibles</label>
+                  <select id="cu02-horario">
+                    <option value="">-- Seleccione un horario --</option>
+                    <option value="8-830">8:00 a 8:30 hs</option>
+                    <option value="9-930">9:00 a 9:30 hs</option>
+                    <option value="no-disponible">
+                      10:00 a 10:30 hs (no disponible)
+                    </option>
+                  </select>
+                  <small
+                    class="error-inline"
+                    id="cu02-horario-error"
+                    style="display:none;"
+                    >*Horario no seleccionado*</small
+                  >
+                </div>
+
+                <div class="buttons-inline">
+                  <button class="btn secondary" id="cu02-cancelar">
+                    Cancelar
+                  </button>
+                  <button class="btn" id="cu02-confirmar">
+                    Confirmar Turno
+                  </button>
+                </div>
+              </div>
+
+              <div
+                style="display:flex;flex-direction:column;gap:12px;align-items:flex-end;"
+              >
+                <div class="calendar-widget">
+                  <div class="calendar-header">
+                    <button
+                      type="button"
+                      id="cu02-cal-prev"
+                      style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:16px;"
+                    >
+                      ‹
+                    </button>
+                    <div id="cu02-cal-label"></div>
+                    <button
+                      type="button"
+                      id="cu02-cal-next"
+                      style="background:none;border:none;color:#6b7280;cursor:pointer;font-size:16px;"
+                    >
+                      ›
+                    </button>
+                  </div>
+                  <div class="calendar-grid" id="cu02-cal-grid"></div>
+                </div>
+
+                <div
+                  id="cu02-confirmation-container"
+                  style="display:flex;justify-content:flex-end;width:100%;"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CU03 -->
+      <section
+        id="screen-cu03"
+        class="screen screen-cu03"
+        aria-label="Órdenes pendientes de Auditoría Médica"
+      >
+        <div class="screen-layout">
+          <div class="left-panel">
+            <h2>Auditoría Médica</h2>
+            <div class="field">
+              <label>Órdenes pendientes:</label>
+            </div>
+          </div>
+
+          <div>
+            <div
+              id="cu03-top-message"
+              class="top-message"
+              aria-live="assertive"
+              style="margin-bottom:12px;"
+            >
+              <span class="icon">✖</span>
+              <span id="cu03-top-message-text"></span>
+              <span class="close" data-close="#cu03-top-message">&times;</span>
+            </div>
+
+            <div class="audit-filters">
+              <span>Ordenar por:</span>
+              <select id="cu03-ordenar" class="audit-select">
+                <option value="antiguos">Mis Antiguos Primero</option>
+                <option value="recientes">Más recientes primero</option>
+                <option value="id">ID Auditoría</option>
+              </select>
+
+              <span>Filtrar por:</span>
+              <select id="cu03-filtrar" class="audit-select">
+                <option value="todos">Todos</option>
+                <option value="jimenez">
+                  Auditor Responsable (Jimenez, Francisco)
+                </option>
+                <option value="pendiente">Estado: Pendiente</option>
+              </select>
+
+              <div class="spacer"></div>
+
+              <span>Buscar:</span>
+              <div class="search-box audit-search">
+                <span>🔍</span>
+                <input id="cu03-search" type="text" placeholder="Search" />
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID Auditoría</th>
+                    <th>Auditor Responsable</th>
+                    <th>ID Orden</th>
+                    <th>Tipo de Consulta</th>
+                    <th>Fecha de Emisión</th>
+                    <th>Estado</th>
+                    <th>Nro. Afiliado</th>
+                    <th>Nombre Afiliado</th>
+                    <th>Resultado</th>
+                    <th>Fecha Dictamen</th>
+                    <th>Opciones</th>
+                  </tr>
+                </thead>
+                <tbody id="cu03-tbody"></tbody>
+              </table>
+              <div class="pager" id="cu03-pager"></div>
+
+              <!-- Overlay error BD CU03 -->
+              <div id="cu03-db-error-overlay" class="overlay-backdrop">
+                <div class="overlay-card">
+                  <div class="close" id="cu03-db-error-close">&times;</div>
+                  <div style="display:flex;align-items:flex-start;">
+                    <div class="overlay-icon">!</div>
+                    <div>
+                      <div class="overlay-title">Error message</div>
+                      <div class="overlay-body">
+                        No se pudo cargar la base de datos de las órdenes pendientes.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Fin overlay -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    /********* Datos simulados *********/
+    const especialistasBase = [
+      {
+        id: 1,
+        nombre: "Correa, Juan C.",
+        especialidad: "Odontólogo",
+        especialidadKey: "odontologia",
+        beneficiarios: ["af1", "af2"],
+        direccion: "Av. Salud 123, SMT, Tucumán",
+        foto: "https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 2,
+        nombre: "López, Luciano",
+        especialidad: "Neurólogo",
+        especialidadKey: "neurologia",
+        beneficiarios: ["af1"],
+        direccion: "Bv. Central 450, SMT, Tucumán",
+        foto: "https://images.pexels.com/photos/8460048/pexels-photo-8460048.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 3,
+        nombre: "Faminsky, Juliana",
+        especialidad: "Pediatra",
+        especialidadKey: "pediatria",
+        beneficiarios: ["af1", "af2"],
+        direccion: "Calle Niño Sano 77, SMT, Tucumán",
+        foto: "https://images.pexels.com/photos/3714743/pexels-photo-3714743.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 4,
+        nombre: "Díaz, Elisa M.",
+        especialidad: "Médica General",
+        especialidadKey: "medica-general",
+        beneficiarios: ["af1"],
+        direccion: "Mitre 765, SMT, Tucumán",
+        foto: "https://images.pexels.com/photos/3845761/pexels-photo-3845761.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 5,
+        nombre: "Nakazawa, José L.",
+        especialidad: "Ortodontista",
+        especialidadKey: "odontologia",
+        beneficiarios: ["af1", "af2"],
+        direccion: "Consultorios Norte, Local 3, SMT",
+        foto: "https://images.pexels.com/photos/3845852/pexels-photo-3845852.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 6,
+        nombre: "Angel, Diego C.",
+        especialidad: "Cirujano",
+        especialidadKey: "cirugia",
+        beneficiarios: ["af2"],
+        direccion: "Sanatorio Central, Piso 2, SMT",
+        foto: "https://images.pexels.com/photos/3279197/pexels-photo-3279197.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+      {
+        id: 7,
+        nombre: "Gordillo, Martín J.",
+        especialidad: "Nutricionista",
+        especialidadKey: "nutricion",
+        beneficiarios: ["af1", "af2"],
+        direccion: "Centro Médico Prensa, Junin 754, SMT",
+        foto: "https://images.pexels.com/photos/5452201/pexels-photo-5452201.jpeg?auto=compress&cs=tinysrgb&w=600",
+      },
+    ];
+
+    const ordenesPendientes = [
+      {
+        idAuditoria: "00203",
+        auditor: "Jimenez, Francisco",
+        idOrden: "112333",
+        tipoConsulta: "Odontologo - CMED",
+        fechaEmision: "2025-11-05",
+        estado: "Pendiente",
+        nroAfiliado: "62286",
+        nombreAfiliado: "Sebastian, Martinez",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00204",
+        auditor: "Jimenez, Francisco",
+        idOrden: "112545",
+        tipoConsulta: "Psicologo - CMED",
+        fechaEmision: "2025-11-05",
+        estado: "Pendiente",
+        nroAfiliado: "60186",
+        nombreAfiliado: "Juan, Martín",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00205",
+        auditor: "Jimenez, Francisco",
+        idOrden: "112356",
+        tipoConsulta: "Cirugía - Externo",
+        fechaEmision: "2025-11-06",
+        estado: "Pendiente",
+        nroAfiliado: "98744",
+        nombreAfiliado: "Leonardo, Trevisani",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00206",
+        auditor: "Jimenez, Francisco",
+        idOrden: "113342",
+        tipoConsulta: "Oftalmólogo - Externo",
+        fechaEmision: "2025-11-07",
+        estado: "Pendiente",
+        nroAfiliado: "56212",
+        nombreAfiliado: "Juana, Vicente",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00207",
+        auditor: "Jimenez, Francisco",
+        idOrden: "113464",
+        tipoConsulta: "Neurología - Externo",
+        fechaEmision: "2025-11-08",
+        estado: "Pendiente",
+        nroAfiliado: "54335",
+        nombreAfiliado: "Edith, Gonzales",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00208",
+        auditor: "Jimenez, Francisco",
+        idOrden: "114133",
+        tipoConsulta: "Kinesiología - Externo",
+        fechaEmision: "2025-05-16",
+        estado: "Pendiente",
+        nroAfiliado: "77652",
+        nombreAfiliado: "Joaquín, Valdecantos",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00209",
+        auditor: "Jimenez, Francisco",
+        idOrden: "114453",
+        tipoConsulta: "Farmacia - Externo",
+        fechaEmision: "2025-05-17",
+        estado: "Pendiente",
+        nroAfiliado: "65433",
+        nombreAfiliado: "Joaquín, Valdecantos",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00210",
+        auditor: "Jimenez, Francisco",
+        idOrden: "115211",
+        tipoConsulta: "Pediatra - Externo",
+        fechaEmision: "2025-05-22",
+        estado: "Pendiente",
+        nroAfiliado: "44322",
+        nombreAfiliado: "Julián, Carnaño",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00211",
+        auditor: "Jimenez, Francisco",
+        idOrden: "115521",
+        tipoConsulta: "Medico Gral. - CMED",
+        fechaEmision: "2025-05-24",
+        estado: "Pendiente",
+        nroAfiliado: "43223",
+        nombreAfiliado: "Perry, Nicolas",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00212",
+        auditor: "Jimenez, Francisco",
+        idOrden: "115554",
+        tipoConsulta: "Psicologo - CMED",
+        fechaEmision: "2025-05-26",
+        estado: "Pendiente",
+        nroAfiliado: "60072",
+        nombreAfiliado: "Chirino, Iván",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00213",
+        auditor: "Jimenez, Francisco",
+        idOrden: "116323",
+        tipoConsulta: "Farmacia - Externo",
+        fechaExt: "2025-05-28",
+        fechaEmision: "2025-05-28",
+        estado: "Pendiente",
+        nroAfiliado: "45236",
+        nombreAfiliado: "Andrea, Bocelli",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00214",
+        auditor: "Jimenez, Francisco",
+        idOrden: "116545",
+        tipoConsulta: "Óptica - Externo",
+        fechaEmision: "2025-06-01",
+        estado: "Pendiente",
+        nroAfiliado: "34552",
+        nombreAfiliado: "Martina, Nazareno",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00215",
+        auditor: "Jimenez, Francisco",
+        idOrden: "116455",
+        tipoConsulta: "Farmacia - Externo",
+        fechaEmision: "2025-06-24",
+        estado: "Pendiente",
+        nroAfiliado: "29345",
+        nombreAfiliado: "Patricia, Aarzetsky",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+      {
+        idAuditoria: "00216",
+        auditor: "Jimenez, Francisco",
+        idOrden: "116465",
+        tipoConsulta: "Farmacia - Externo",
+        fechaEmision: "2025-06-30",
+        estado: "Pendiente",
+        nroAfiliado: "42342",
+        nombreAfiliado: "Johanna, Juarez",
+        resultado: "-",
+        fechaDictamen: "-",
+      },
+    ];
+
+    /********* Utilidades UI *********/
+    function switchScreen(targetId) {
+      document
+        .querySelectorAll(".screen")
+        .forEach((s) => s.classList.remove("active"));
+      document.getElementById("screen-" + targetId).classList.add("active");
+
+      document
+        .querySelectorAll(".screen-tab")
+        .forEach((b) => b.classList.remove("active"));
+      document
+        .querySelector('.screen-tab[data-screen-target="' + targetId + '"]')
+        .classList.add("active");
+
+      const headerTitle = document.getElementById("header-title");
+      const greetingName = document.getElementById("greeting-name");
+
+      if (targetId === "cu01") {
+        headerTitle.textContent = "Solicitud de Orden de Consulta";
+        greetingName.textContent = "[Afiliado]";
+      } else if (targetId === "cu02") {
+        headerTitle.textContent = "Solicitud de Turno Centro Médico";
+        greetingName.textContent = "[Afiliado]";
+      } else {
+        headerTitle.textContent = "Auditoría Médica";
+        greetingName.textContent = "[Auditor Responsable]";
+      }
+    }
+
+    document.querySelectorAll(".screen-tab").forEach((btn) =>
+      btn.addEventListener("click", () =>
+        switchScreen(btn.dataset.screenTarget)
+      )
+    );
+
+    function showTopMessage(id, text) {
+      const box = document.getElementById(id);
+      const span = document.getElementById(id + "-text");
+      span.innerHTML = text;
+      box.classList.add("visible");
+    }
+
+    function hideElementBySelector(sel) {
+      const el = document.querySelector(sel);
+      if (el) el.classList.remove("visible");
+    }
+
+    document.querySelectorAll("[data-close]").forEach((btn) => {
+      btn.addEventListener("click", () => hideElementBySelector(btn.dataset.close));
+    });
+
+    function showOverlay(title, body) {
+      const overlay = document.getElementById("global-overlay");
+      document.getElementById("overlay-title").textContent = title;
+      document.getElementById("overlay-body").innerHTML = body;
+      overlay.classList.add("visible");
+    }
+
+    document.querySelectorAll("[data-overlay-close]").forEach((btn) =>
+      btn.addEventListener("click", () =>
+        document.getElementById("global-overlay").classList.remove("visible")
+      )
+    );
+
+    function clearChildren(el) {
+      while (el.firstChild) el.removeChild(el.firstChild);
+    }
+
+    /********* Carrusel reusable *********/
+    function initCarousel({
+      trackId,
+      prevBtnId,
+      nextBtnId,
+      searchInputId,
+      beneficiarioSelectId,
+      especialidadSelectId,
+      onProviderSelected,
+    }) {
+      const track = document.getElementById(trackId);
+      const prevBtn = document.getElementById(prevBtnId);
+      const nextBtn = document.getElementById(nextBtnId);
+      const searchInput = document.getElementById(searchInputId);
+      const beneficiarioSelect = document.getElementById(beneficiarioSelectId);
+      const especialidadSelect = document.getElementById(especialidadSelectId);
+
+      let filteredList = especialistasBase.slice();
+      let currentIndex = 0;
+      let selectedId = null;
+
+      function applyFilters() {
+        const q = searchInput.value.trim().toLowerCase();
+        const ben = beneficiarioSelect.value;
+        const esp = especialidadSelect.value;
+
+        filteredList = especialistasBase.filter((e) => {
+          const matchesBen =
+            ben === "orden-vigente" ||
+            ben === "no-elegible" ||
+            ben === "pendiente-auditoria" ||
+            e.beneficiarios.includes(ben);
+          const matchesEsp =
+            !esp || e.especialidadKey === esp || esp === "error-sistema";
+          const matchesQ =
+            !q ||
+            e.nombre.toLowerCase().includes(q) ||
+            e.especialidad.toLowerCase().includes(q);
+          return matchesBen && matchesEsp && matchesQ;
+        });
+
+        currentIndex = 0;
+        render();
+      }
+
+      function render() {
+        clearChildren(track);
+        const visible = 5;
+        const total = filteredList.length;
+        if (!total) return;
+
+        const slice = [];
+        for (let i = 0; i < Math.min(visible, total); i++) {
+          const idx = (currentIndex + i) % total;
+          slice.push(filteredList[idx]);
+        }
+
+        slice.forEach((doc) => {
+          const card = document.createElement("div");
+          card.className = "doctor-card";
+          if (doc.id === selectedId) card.classList.add("selected");
+
+          const img = document.createElement("img");
+          img.src = doc.foto;
+          img.alt = doc.nombre;
+
+          const name = document.createElement("div");
+          name.className = "doctor-name";
+          name.textContent = doc.nombre;
+
+          const spec = document.createElement("div");
+          spec.className = "doctor-specialty";
+          spec.textContent = doc.especialidad;
+
+          card.appendChild(img);
+          card.appendChild(name);
+          card.appendChild(spec);
+
+          card.addEventListener("click", () => {
+            selectedId = doc.id;
+            render();
+            onProviderSelected(doc);
+          });
+
+          track.appendChild(card);
+        });
+      }
+
+      prevBtn.addEventListener("click", () => {
+        if (!filteredList.length) return;
+        currentIndex =
+          (currentIndex - 1 + filteredList.length) % filteredList.length;
+        render();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (!filteredList.length) return;
+        currentIndex = (currentIndex + 1) % filteredList.length;
+        render();
+      });
+
+      searchInput.addEventListener("input", applyFilters);
+      beneficiarioSelect.addEventListener("change", applyFilters);
+      especialidadSelect.addEventListener("change", applyFilters);
+
+      applyFilters();
+
+      return {
+        getSelected: () =>
+          especialistasBase.find((e) => e.id === selectedId) || null,
+        clearSelection: () => {
+          selectedId = null;
+          render();
+        },
+      };
+    }
+
+    /********* CU01 *********/
+    const cu01SelectedLabel = document.getElementById("cu01-selected-provider");
+    const cu01MapAddress = document.getElementById("cu01-map-address");
+    const cu01ConfirmContainer = document.getElementById(
+      "cu01-confirmation-container"
+    );
+    const cu01MapIframe = document.getElementById("cu01-map-iframe");
+
+    function updateCu01Map(address) {
+      const q = encodeURIComponent(
+        address || "San Miguel de Tucumán, Tucumán"
+      );
+      cu01MapIframe.src = "https://www.google.com/maps?q=" + q + "&output=embed";
+    }
+
+    const cu01Carousel = initCarousel({
+      trackId: "cu01-carousel-track",
+      prevBtnId: "cu01-prev",
+      nextBtnId: "cu01-next",
+      searchInputId: "cu01-search",
+      beneficiarioSelectId: "cu01-beneficiario",
+      especialidadSelectId: "cu01-especialidad",
+      onProviderSelected: (doc) => {
+        cu01SelectedLabel.textContent = doc.nombre;
+        cu01MapAddress.textContent = `[ ${doc.direccion} ]`;
+        updateCu01Map(doc.direccion);
+      },
+    });
+
+    document.getElementById("cu01-map-refresh").addEventListener("click", () => {
+      const doc = cu01Carousel.getSelected();
+      cu01MapAddress.style.opacity = "0.4";
+      setTimeout(() => {
+        cu01MapAddress.style.opacity = "1";
+        cu01MapAddress.textContent =
+          "[ " +
+          (doc ? doc.direccion : "Dirección del Prestador Seleccionado") +
+          " ]";
+        updateCu01Map(doc && doc.direccion);
+      }, 220);
+    });
+
+    document.getElementById("cu01-cancelar").addEventListener("click", () => {
+      cu01Carousel.clearSelection();
+      cu01SelectedLabel.textContent = "[ Nombre prestador ]";
+      cu01MapAddress.textContent = "[ Dirección del Prestador Seleccionado ]";
+      updateCu01Map(null);
+      clearChildren(cu01ConfirmContainer);
+      hideElementBySelector("#cu01-top-message");
+    });
+
+    function cu01ShowConfirmation(type) {
+      clearChildren(cu01ConfirmContainer);
+      const box = document.createElement("div");
+      box.className = "confirmation-box";
+      if (type === "pendiente") box.classList.add("warning");
+
+      if (type === "ok") {
+        box.innerHTML =
+          "<strong>Orden confirmada</strong>" +
+          "<em>Se le enviará un correo electrónico con un PDF de la orden de consulta.</em>";
+      } else if (type === "pendiente") {
+        box.innerHTML =
+          "<strong>Orden Pendiente de Confirmación</strong>" +
+          "<div>Esta emisión quedará sujeta a dictamen.</div>" +
+          "<em>Se le enviará un correo electrónico acerca de la orden de consulta.</em>";
+      }
+
+      cu01ConfirmContainer.appendChild(box);
+    }
+
+    document.getElementById("cu01-confirmar").addEventListener("click", () => {
+      clearChildren(cu01ConfirmContainer);
+      hideElementBySelector("#cu01-top-message");
+
+      const beneficiario = document.getElementById("cu01-beneficiario").value;
+      const especialidad = document.getElementById("cu01-especialidad").value;
+      const provider = cu01Carousel.getSelected();
+
+      if (!provider) {
+        showTopMessage(
+          "cu01-top-message",
+          "Debe seleccionar un prestador antes de confirmar la orden."
+        );
+        return;
+      }
+
+      if (especialidad === "error-sistema") {
+        showTopMessage(
+          "cu01-top-message",
+          "Ha ocurrido un error inesperado, intente nuevamente."
+        );
+        return;
+      }
+
+      if (beneficiario === "no-elegible" || beneficiario === "orden-vigente") {
+        showOverlay(
+          "Error al crear orden de consulta:",
+          "<p><em>Afiliado no elegible ([Motivo], [Sugerencia])</em></p>" +
+            "<p><em>Se detectó una orden vigente para la especialidad seleccionada.</em></p>"
+        );
+        return;
+      }
+
+      if (beneficiario === "pendiente-auditoria") {
+        cu01ShowConfirmation("pendiente");
+        return;
+      }
+
+      cu01ShowConfirmation("ok");
+    });
+
+    /********* CU02 *********/
+    const cu02SelectedLabel = document.getElementById("cu02-selected-provider");
+    const cu02ConfirmContainer = document.getElementById(
+      "cu02-confirmation-container"
+    );
+
+    const cu02Carousel = initCarousel({
+      trackId: "cu02-carousel-track",
+      prevBtnId: "cu02-prev",
+      nextBtnId: "cu02-next",
+      searchInputId: "cu02-search",
+      beneficiarioSelectId: "cu02-beneficiario",
+      especialidadSelectId: "cu02-especialidad",
+      onProviderSelected: (doc) => {
+        cu02SelectedLabel.textContent = doc.nombre;
+      },
+    });
+
+    document.getElementById("cu02-cancelar").addEventListener("click", () => {
+      cu02Carousel.clearSelection();
+      cu02SelectedLabel.textContent = "[ Nombre prestador ]";
+      document.getElementById("cu02-fecha").value = "";
+      document.getElementById("cu02-horario").value = "";
+      document.getElementById("cu02-fecha-error").style.display = "none";
+      document.getElementById("cu02-horario-error").style.display = "none";
+      hideElementBySelector("#cu02-top-message");
+      clearChildren(cu02ConfirmContainer);
+    });
+
+    function cu02ShowConfirmation() {
+      clearChildren(cu02ConfirmContainer);
+      const box = document.createElement("div");
+      box.className = "confirmation-box";
+      box.innerHTML =
+        "<strong>Orden confirmada</strong>" +
+        "<em>Se le enviará un correo electrónico con la confirmación del turno y un recordatorio.</em>";
+      cu02ConfirmContainer.appendChild(box);
+    }
+
+    // Calendario simple CU02
+    const cu02CalGrid = document.getElementById("cu02-cal-grid");
+    const cu02CalLabel = document.getElementById("cu02-cal-label");
+    const cu02FechaInput = document.getElementById("cu02-fecha");
+    let cu02CalCurrent = new Date();
+
+    function buildCalendar() {
+      clearChildren(cu02CalGrid);
+      const year = cu02CalCurrent.getFullYear();
+      const month = cu02CalCurrent.getMonth();
+
+      const monthName = cu02CalCurrent.toLocaleString("es-AR", {
+        month: "long",
+        year: "numeric",
+      });
+      cu02CalLabel.textContent =
+        monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+      const firstDay = new Date(year, month, 1);
+      const firstDayWeekday = (firstDay.getDay() + 6) % 7; // lunes 0
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const weekdays = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
+      weekdays.forEach((d) => {
+        const cell = document.createElement("div");
+        cell.textContent = d;
+        cell.className = "calendar-weekday";
+        cu02CalGrid.appendChild(cell);
+      });
+
+      for (let i = 0; i < firstDayWeekday; i++) {
+        const empty = document.createElement("div");
+        cu02CalGrid.appendChild(empty);
+      }
+
+      const selectedDate = cu02FechaInput.value
+        ? new Date(cu02FechaInput.value)
+        : null;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.textContent = day;
+        cell.className = "calendar-day";
+        const cellDate = new Date(year, month, day);
+
+        if (
+          selectedDate &&
+          selectedDate.getFullYear() === cellDate.getFullYear() &&
+          selectedDate.getMonth() === cellDate.getMonth() &&
+          selectedDate.getDate() === cellDate.getDate()
+        ) {
+          cell.classList.add("selected");
+        }
+
+        cell.addEventListener("click", () => {
+          const iso = cellDate.toISOString().slice(0, 10);
+          cu02FechaInput.value = iso;
+          buildCalendar();
+        });
+
+        cu02CalGrid.appendChild(cell);
+      }
+    }
+
+    document.getElementById("cu02-cal-prev").addEventListener("click", () => {
+      cu02CalCurrent.setMonth(cu02CalCurrent.getMonth() - 1);
+      buildCalendar();
+    });
+
+    document.getElementById("cu02-cal-next").addEventListener("click", () => {
+      cu02CalCurrent.setMonth(cu02CalCurrent.getMonth() + 1);
+      buildCalendar();
+    });
+
+    cu02FechaInput.addEventListener("change", buildCalendar);
+    buildCalendar();
+
+    document.getElementById("cu02-confirmar").addEventListener("click", () => {
+      clearChildren(cu02ConfirmContainer);
+      hideElementBySelector("#cu02-top-message");
+
+      const provider = cu02Carousel.getSelected();
+      const especialidad = document.getElementById("cu02-especialidad").value;
+      const fecha = cu02FechaInput.value;
+      const horario = document.getElementById("cu02-horario").value;
+
+      if (!provider || !fecha || !horario) {
+        showTopMessage(
+          "cu02-top-message",
+          "<em>Faltan requisitos para tomar el Turno</em><br/><em>Ningún médico seleccionado</em>"
+        );
+        document.getElementById("cu02-fecha-error").style.display = fecha
+          ? "none"
+          : "block";
+        document.getElementById("cu02-horario-error").style.display = horario
+          ? "none"
+          : "block";
+        return;
+      }
+
+      if (especialidad === "error-sistema") {
+        showTopMessage(
+          "cu02-top-message",
+          "Ha ocurrido un error inesperado, intente nuevamente."
+        );
+        return;
+      }
+
+      if (horario === "no-disponible") {
+        showOverlay(
+          "Horario del turno no disponible",
+          "Horario del turno no disponible, seleccione otro horario o consulte otro especialista."
+        );
+        return;
+      }
+
+      cu02ShowConfirmation();
+    });
+
+    /********* CU03 tabla y paginación *********/
+    let cu03CurrentPage = 1;
+    const cu03PageSize = 10;
+    let cu03Filtered = ordenesPendientes.slice();
+
+    const cu03Tbody = document.getElementById("cu03-tbody");
+    const cu03Pager = document.getElementById("cu03-pager");
+
+    function applyCu03Filters() {
+      const ordenar = document.getElementById("cu03-ordenar").value;
+      const filtrar = document.getElementById("cu03-filtrar").value;
+      const query = document.getElementById("cu03-search").value.toLowerCase();
+
+      cu03Filtered = ordenesPendientes.slice();
+
+      if (filtrar === "jimenez") {
+        cu03Filtered = cu03Filtered.filter((o) =>
+          o.auditor.includes("Jimenez")
+        );
+      } else if (filtrar === "pendiente") {
+        cu03Filtered = cu03Filtered.filter((o) => o.estado === "Pendiente");
+      }
+
+      if (query) {
+        cu03Filtered = cu03Filtered.filter((o) => {
+          const text =
+            o.idAuditoria +
+            " " +
+            o.idOrden +
+            " " +
+            o.nombreAfiliado +
+            " " +
+            o.nroAfiliado;
+          return text.toLowerCase().includes(query);
+        });
+      }
+
+      if (ordenar === "antiguos") {
+        cu03Filtered.sort(
+          (a, b) => new Date(a.fechaEmision) - new Date(b.fechaEmision)
+        );
+      } else if (ordenar === "recientes") {
+        cu03Filtered.sort(
+          (a, b) => new Date(b.fechaEmision) - new Date(a.fechaEmision)
+        );
+      } else if (ordenar === "id") {
+        cu03Filtered.sort(
+          (a, b) => parseInt(a.idAuditoria) - parseInt(b.idAuditoria)
+        );
+      }
+
+      cu03CurrentPage = 1;
+      renderCu03();
+    }
+
+    function renderCu03() {
+      clearChildren(cu03Tbody);
+      clearChildren(cu03Pager);
+
+      const totalPages = Math.max(
+        1,
+        Math.ceil(cu03Filtered.length / cu03PageSize)
+      );
+      cu03CurrentPage = Math.min(cu03CurrentPage, totalPages);
+
+      const start = (cu03CurrentPage - 1) * cu03PageSize;
+      const pageItems = cu03Filtered.slice(start, start + cu03PageSize);
+
+      pageItems.forEach((item) => {
+        const tr = document.createElement("tr");
+
+        function cell(text) {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        }
+
+        cell(item.idAuditoria);
+        cell(item.auditor);
+        cell(item.idOrden);
+        cell(item.tipoConsulta);
+        cell(new Date(item.fechaEmision).toLocaleDateString("es-AR"));
+
+        // Estado editable
+        const tdEstado = document.createElement("td");
+        const selEstado = document.createElement("select");
+        ["Pendiente", "Aceptada", "Rechazada"].forEach((opt) => {
+          const o = document.createElement("option");
+          o.value = opt;
+          o.textContent = opt;
+          selEstado.appendChild(o);
+        });
+        selEstado.value = item.estado;
+        selEstado.addEventListener("change", () => {
+          item.estado = selEstado.value;
+          if (item.estado === "Pendiente") {
+            item.resultado = "-";
+            item.fechaDictamen = "-";
+          } else {
+            item.resultado = item.estado;
+            item.fechaDictamen = new Date().toISOString().slice(0, 10);
+          }
+          renderCu03();
+        });
+        tdEstado.appendChild(selEstado);
+        tr.appendChild(tdEstado);
+
+        cell(item.nroAfiliado);
+        cell(item.nombreAfiliado);
+        cell(item.resultado);
+        cell(item.fechaDictamen);
+
+        const tdOpc = document.createElement("td");
+        tdOpc.className = "audit-options";
+        ["Ver más", "Aceptar", "Rechazar"].forEach((label) => {
+          const a = document.createElement("a");
+          a.textContent = label;
+          a.addEventListener("click", () => {
+            if (label === "Ver más") {
+              showOverlay(
+                "Detalle de la orden",
+                `<p>ID Auditoría: <strong>${item.idAuditoria}</strong></p><p>Afiliado: <strong>${item.nombreAfiliado}</strong></p><p>Tipo de consulta: ${item.tipoConsulta}</p>`
+              );
+            } else {
+              item.estado = label === "Aceptar" ? "Aceptada" : "Rechazada";
+              item.resultado = item.estado;
+              item.fechaDictamen = new Date().toISOString().slice(0, 10);
+              renderCu03();
+            }
+          });
+          tdOpc.appendChild(a);
+        });
+        tr.appendChild(tdOpc);
+
+        cu03Tbody.appendChild(tr);
+      });
+
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "secondary";
+      prevBtn.textContent = "Anterior";
+      prevBtn.disabled = cu03CurrentPage === 1;
+      if (prevBtn.disabled) prevBtn.style.opacity = "0.5";
+      prevBtn.addEventListener("click", () => {
+        if (cu03CurrentPage > 1) {
+          cu03CurrentPage--;
+          renderCu03();
+        }
+      });
+      cu03Pager.appendChild(prevBtn);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        if (i === cu03CurrentPage) btn.classList.add("current");
+        btn.addEventListener("click", () => {
+          cu03CurrentPage = i;
+          renderCu03();
+        });
+        cu03Pager.appendChild(btn);
+      }
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "secondary";
+      nextBtn.textContent = "Siguiente";
+      nextBtn.disabled = cu03CurrentPage === totalPages;
+      if (nextBtn.disabled) nextBtn.style.opacity = "0.5";
+      nextBtn.addEventListener("click", () => {
+        if (cu03CurrentPage < totalPages) {
+          cu03CurrentPage++;
+          renderCu03();
+        }
+      });
+      cu03Pager.appendChild(nextBtn);
+    }
+
+    document
+      .getElementById("cu03-ordenar")
+      .addEventListener("change", applyCu03Filters);
+    document
+      .getElementById("cu03-filtrar")
+      .addEventListener("change", applyCu03Filters);
+    document
+      .getElementById("cu03-search")
+      .addEventListener("input", applyCu03Filters);
+
+    applyCu03Filters();
+
+    // Simulador de error de BD (poner true para ver ese estado)
+    const simulateDbError = false;
+
+    if (simulateDbError) {
+      clearChildren(cu03Tbody);
+      document.getElementById("cu03-db-error-overlay").classList.add("visible");
+      document.getElementById("cu03-ordenar").setAttribute("disabled", "true");
+      document.getElementById("cu03-filtrar").setAttribute("disabled", "true");
+      document.getElementById("cu03-search").setAttribute("disabled", "true");
+    }
+
+    document
+      .getElementById("cu03-db-error-close")
+      .addEventListener("click", () => {
+        document
+          .getElementById("cu03-db-error-overlay")
+          .classList.remove("visible");
+        document.getElementById("cu03-ordenar").removeAttribute("disabled");
+        document.getElementById("cu03-filtrar").removeAttribute("disabled");
+        document.getElementById("cu03-search").removeAttribute("disabled");
+      });
+
+    // Estado inicial
+    switchScreen("cu01");
+  </script>
+</body>
+</html>

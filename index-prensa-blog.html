@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prensa Net - Trabajo Final Integrador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-teal: #0e6f73;
+      --bg-teal-soft: #0b8288;
+      --accent-lime: #b6d636;
+      --accent-lime-soft: #d9ea7c;
+      --accent-pink: #f04e9b;
+      --surface: #ffffff;
+      --surface-soft: #f4fbfb;
+      --border-soft: rgba(0, 0, 0, 0.06);
+      --text-main: #153b3f;
+      --text-muted: #5f777a;
+      --danger: #d9534f;
+      --warning: #f7c948;
+      --success: #28a745;
+      --shadow-soft: 0 14px 30px rgba(0, 0, 0, 0.15);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      scroll-behavior: smooth;
+      background: radial-gradient(circle at top left, #15a1a8 0, #0e6f73 40%, #07393d 100%);
+      min-height: 100%;
+    }
+
+    body {
+      padding-bottom: 40px;
+    }
+
+    .app-shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(240, 252, 252, 0.98));
+      border-radius: 32px;
+      margin-top: 16px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top right, rgba(182, 214, 54, 0.18), transparent 55%),
+        radial-gradient(circle at bottom left, rgba(240, 78, 155, 0.12), transparent 55%);
+      mix-blend-mode: screen;
+    }
+
+    .app-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HEADER / NAV --------------------------------------------------------- */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(13, 111, 115, 0.08);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 20%, #b6d636, #0e6f73);
+      color: #fff;
+      font-weight: 700;
+      font-size: 24px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+      overflow: hidden;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 4px;
+    }
+
+    .brand-text-main {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #0b3c3f;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+
+    .nav-main {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+    }
+
+    .nav-main a {
+      position: relative;
+      text-decoration: none;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: var(--radius-pill);
+      transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .nav-main a::after {
+      content: "";
+      position: absolute;
+      inset-inline: 14px;
+      bottom: 4px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-lime), var(--accent-pink));
+      opacity: 0;
+      transform: scaleX(0.6);
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-main a:hover {
+      background: rgba(14, 111, 115, 0.06);
+      color: var(--bg-teal);
+      transform: translateY(-1px);
+    }
+
+    .nav-main a.active {
+      color: var(--bg-teal);
+      background: rgba(14, 111, 115, 0.08);
+    }
+
+    .nav-main a.active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(14, 111, 115, 0.06);
+      padding: 6px 10px 6px 6px;
+      border-radius: 999px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: conic-gradient(from 160deg, #0e6f73, #b6d636, #f04e9b, #0e6f73);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .user-info-main {
+      font-size: 12px;
+      font-weight: 500;
+      color: #0b3c3f;
+    }
+
+    .user-info-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* LAYOUT SECTIONS ------------------------------------------------------- */
+
+    main {
+      padding: 24px 22px 30px;
+    }
+
+    .section {
+      padding: 40px 18px 46px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+      padding-bottom: 32px;
+    }
+
+    .section-header {
+      max-width: 900px;
+      margin: 0 auto 24px;
+      text-align: left;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      background: rgba(182, 214, 54, 0.18);
+      color: #325009;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .section-label-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+    }
+
+    .section-title {
+      font-size: 26px;
+      margin: 0 0 6px;
+      letter-spacing: 0.02em;
+      color: #08373a;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .content-grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      box-shadow: 0 10px 26px rgba(13, 111, 115, 0.07);
+      border: 1px solid var(--border-soft);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      margin: 0;
+      color: #0e3f41;
+    }
+
+    .card-subtitle {
+      margin: 3px 0 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .tag-chip {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: rgba(13, 111, 115, 0.07);
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: #0b3c3f;
+    }
+
+    p {
+      margin: 5px 0 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 6px 0 12px;
+      font-size: 14px;
+    }
+
+    li + li {
+      margin-top: 3px;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(14, 111, 115, 0.07);
+      color: #0b3c3f;
+    }
+
+    .participants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .participant-chip {
+      background: rgba(240, 78, 155, 0.08);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(240, 78, 155, 0.14);
+    }
+
+    .participant-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f04e9b, #b6d636);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .diagram-placeholder {
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(13, 111, 115, 0.3);
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(182, 214, 54, 0.08),
+        rgba(182, 214, 54, 0.08) 10px,
+        rgba(255, 255, 255, 0.3) 10px,
+        rgba(255, 255, 255, 0.3) 20px
+      );
+      padding: 14px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--text-muted);
+      gap: 6px;
+      font-size: 13px;
+    }
+
+    .diagram-placeholder strong {
+      color: #0c4143;
+    }
+
+    .diagram-placeholder span {
+      font-size: 12px;
+    }
+
+    /* TABLES --------------------------------------------------------------- */
+
+    .table-wrapper {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 10px 26px rgba(13, 111, 115, 0.07);
+      border: 1px solid var(--border-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead {
+      background: linear-gradient(90deg, rgba(14, 111, 115, 0.08), rgba(182, 214, 54, 0.25));
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0b3c3f;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(13, 111, 115, 0.02);
+    }
+
+    tbody tr:hover {
+      background: rgba(13, 111, 115, 0.06);
+    }
+
+    /* UTILITIES ------------------------------------------------------------ */
+
+    .mt-6 {
+      margin-top: 6px;
+    }
+
+    .mt-10 {
+      margin-top: 10px;
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+
+    .badge-soft {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(240, 78, 155, 0.08);
+      font-size: 11px;
+      color: #7a2147;
+    }
+
+    /* RESPONSIVE ----------------------------------------------------------- */
+
+    @media (max-width: 1024px) {
+      .content-grid-2 {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      }
+    }
+
+    @media (max-width: 840px) {
+      .app-shell {
+        border-radius: 0;
+        margin-top: 0;
+        box-shadow: none;
+      }
+      main {
+        padding-inline: 16px;
+      }
+      .section {
+        padding-inline: 4px;
+      }
+      .content-grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .header-inner {
+        padding-inline: 16px;
+      }
+      .nav-main {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 10px 16px 12px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        display: none;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+      }
+      .nav-main.open {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .user-pill {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .section-title {
+        font-size: 22px;
+      }
+      .card,
+      .calendar-widget,
+      .cu-panel {
+        padding-inline: 12px;
+      }
+    }
+
+/* --------------------------- HERO SECTION --------------------------- */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 360px; /* Podés ajustar la altura */
+  background-image: url('mi-imagen.png'); /* Cambiar por tu imagen */
+  background-size: cover;
+  background-position: center center;
+  border-radius: 0 0 22px 22px;
+  overflow: hidden;
+}
+
+/* Oscurece la imagen para que el texto sea visible */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /* Opacidad del overlay */
+}
+
+/* Contenedor del texto */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  padding: 20px;
+}
+
+/* Título */
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+/* Subtítulo */
+.hero-subtitle {
+  font-size: 16px;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+/* --- Efecto typing en el hero --- */
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 10px 0;
+  line-height: 1.1;
+}
+
+.hero-title-static {
+  display: inline-block;
+}
+
+.hero-title-typing {
+  display: inline-block;
+  white-space: nowrap;
+  border-right: 3px solid #ffffff;
+  padding-right: 4px;
+  animation: blinkCursor 0.8s steps(1) infinite;
+}
+
+/* Cursor que parpadea */
+@keyframes blinkCursor {
+  0%, 49%   { border-color: #ffffff; }
+  50%, 100% { border-color: transparent; }
+}
+
+/* ---- Contenedor de diagramas que se ajusta al tamaño real de la imagen ---- */
+
+.diagram-container {
+  width: 100%;
+  padding: 0;
+  border: 1px solid #cfe2e3;
+  border-radius: 18px;
+  background: #ffffff;
+  overflow: auto; /* 👈 Permite scroll si la imagen es más grande */
+}
+
+/* Imagen debe mostrarse completa */
+.diagram-container img.diagram-image {
+  width: 100%;     /* Ajustar al ancho del contenedor */
+  height: auto;    /* Mantener proporciones */
+  display: block;
+}
+
+
+  </style>
+  
+</head>
+<body>
+<div class="app-shell">
+  <div class="app-inner">
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-logo">
+            <!-- Reemplazar src por logo-prensa.png si está disponible en la misma carpeta -->
+            <img src="logo-prensa.png" alt="Logo Obra Social de Prensa" onerror="this.style.display='none';this.parentElement.textContent='P';" />
+          </div>
+          <div>
+            <div class="brand-text-main">Prensa Net</div>
+            <div class="brand-text-sub">Trabajo Final Integrador</div>
+          </div>
+        </div>
+
+        <nav class="nav-main" id="mainNav">
+          <a href="#inicio" class="active">Inicio</a>
+          <a href="#primera-etapa">Primera Etapa</a>
+          <a href="#segunda-etapa">Segunda Etapa</a>
+          <a href="#tercera-etapa">Tercera Etapa</a>
+          <a href="#cuarta-etapa">Cuarta Etapa</a>
+          <a href="#prototipos">Prototipos</a>
+        </nav>
+
+        <div class="user-pill">
+          <div class="user-avatar">A</div>
+          <div>
+            <div class="user-info-main">Bienvenido, Afiliado</div>
+            <div class="user-info-sub">Vista blog TFI</div>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">&#9776;</button>
+      </div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-subtitle">Un trabajo sobre la obra social de Prensa</p>
+        <h1 class="hero-title">
+          <span class="hero-title-static">Bienvenido a nuestro </span>
+          <span class="hero-title-typing" id="heroTyping"></span>
+        </h1>
+      </div>
+    </div>
+    
+
+    <main>
+      <!-- INICIO ----------------------------------------------------------- -->
+      <section id="inicio" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Inicio
+          </div>
+          <h1 class="section-title">Bienvenido a nuestro Trabajo Final Integrador</h1>
+          <p class="section-subtitle">
+            Bienvenido a nuestro Trabajo Final Integrador del sistema de información para la Obra Social de Prensa.
+            Este sitio tipo blog reúne la documentación, análisis, modelos y prototipos que dan forma a la
+            plataforma <strong>Prensa Net</strong>.
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Objetivo del Blog</h2>
+                <p class="card-subtitle">
+                  Presentar, de manera ordenada por etapas, todo el recorrido del proyecto: desde el modelado del
+                  negocio hasta el análisis de viabilidad y los prototipos de la solución.
+                </p>
+              </div>
+              <span class="tag-chip">Documentación del Sistema</span>
+            </div>
+
+            <p>
+              El sistema de información propuesto busca <strong>integrar la gestión de órdenes de consulta, turnos médicos
+              y auditoría</strong> en una única plataforma coherente, accesible tanto para afiliados como para el personal
+              administrativo y de auditoría médica.
+            </p>
+            <p>
+              A lo largo de este sitio podrás navegar cada etapa del trabajo, revisar resúmenes de los documentos,
+              visualizar diagramas clave y, finalmente, experimentar con los
+              <strong>prototipos no operacionales</strong> desarrollados para la interfaz de usuario.
+            </p>
+
+            <div class="pill-list">
+              <div class="pill">Modelado del negocio</div>
+              <div class="pill">Documento Visión</div>
+              <div class="pill">Especificación Complementaria</div>
+              <div class="pill">Proceso Unificado</div>
+              <div class="pill">Informe de Viabilidad</div>
+              <div class="pill">Prototipos UI Prensa Net</div>
+            </div>
+          </article>
+
+          <aside class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Equipo de trabajo</h2>
+                <p class="card-subtitle">Integrantes del Grupo Nº 24</p>
+              </div>
+            </div>
+
+            <p class="muted">Este proyecto fue desarrollado de manera colaborativa, combinando análisis organizacional,
+              diseño de sistemas y un fuerte enfoque en experiencia de usuario.</p>
+
+            <div class="participants">
+              <div class="participant-chip">
+                <span class="participant-avatar">CC</span>
+                <span>Chirino, Carlos Iván</span>
+              </div>
+              <div class="participant-chip">
+                <span class="participant-avatar">MS</span>
+                <span>Martinez Sayra Nazarena</span>
+              </div>
+              <div class="participant-chip">
+                <span class="participant-avatar">PF</span>
+                <span>Perry Fabersani Nicolas</span>
+              </div>
+              <div class="participant-chip">
+                <span class="participant-avatar">VJ</span>
+                <span>Valdecantos Joaquin</span>
+              </div>
+              <div class="participant-chip">
+                <span class="participant-avatar">VJ</span>
+                <span>Vicente Juana</span>
+              </div>
+            </div>
+
+            <p class="mt-10 muted">
+              Acompañanos a recorrer las cuatro etapas del trabajo y a explorar cómo se materializa el
+              <strong>sistema Prensa Net</strong> en prototipos navegables.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PRIMERA ETAPA ---------------------------------------------------- -->
+      <section id="primera-etapa" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Primera Etapa
+          </div>
+          <h2 class="section-title">Documento de la Empresa</h2>
+          <p class="section-subtitle">
+            Modelado del negocio de la Obra Social de Prensa: historia, misión, visión, estructura organizacional y
+            procesos clave de Orden de Consulta y Turnos.
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Historia, Misión y Visión</h3>
+                <p class="card-subtitle">Contexto institucional de la Obra Social de Prensa de Tucumán.</p>
+              </div>
+            </div>
+
+            <p>
+              La Obra Social de Prensa surge en 1973 como iniciativa de la Asociación de Prensa de Tucumán, con el
+              objetivo de garantizar la atención de la salud de los trabajadores de prensa y sus familias. Con el
+              tiempo amplió su cobertura a otros sectores laborales, sosteniéndose bajo principios de
+              <strong>solidaridad, universalidad, equidad y accesibilidad</strong>.
+            </p>
+            <p>
+              Su misión es asegurar cobertura de salud integral para todos los afiliados, mientras que la visión se
+              orienta a consolidar un <strong>modelo sanitario inclusivo y preventivo</strong>, gestionado por y para los
+              trabajadores de prensa.
+            </p>
+
+            <h4 class="mt-10">Objetivos institucionales</h4>
+            <ul>
+              <li>Garantizar el acceso integral a la salud, priorizando equidad y calidad.</li>
+              <li>Fortalecer un modelo inclusivo basado en la prevención.</li>
+              <li>Lograr una gestión eficiente y sostenible de los recursos prestacionales.</li>
+              <li>Fomentar la innovación y mejora continua de procesos y sistemas.</li>
+              <li>Promover una cultura organizacional centrada en el servicio humano.</li>
+            </ul>
+
+            <h4>Valores institucionales</h4>
+            <p>
+              Los valores institucionales orientan el funcionamiento diario de la Obra Social y se reflejan en los
+              procesos que luego informatiza Prensa Net:
+            </p>
+            <ul>
+              <li><strong>Solidaridad:</strong> el aporte de todos sostiene el acceso a la salud de cada afiliado.</li>
+              <li><strong>Justicia social y equidad:</strong> prioridad a quienes más lo necesitan, sin discriminación.</li>
+              <li><strong>Transparencia:</strong> trazabilidad de órdenes, turnos y auditorías para evitar abusos y fraudes.</li>
+              <li><strong>Participación democrática:</strong> presencia activa de los trabajadores de prensa en los órganos de decisión.</li>
+              <li><strong>Responsabilidad social:</strong> compromiso con la comunidad y el entorno sanitario provincial.</li>
+              <li><strong>Calidad de servicio:</strong> búsqueda permanente de mejores tiempos de respuesta y atención personalizada.</li>
+            </ul>
+
+            <h4>Funciones generales y procesos principales</h4>
+            <p>
+              La estructura se organiza bajo una modalidad <strong>lineal-funcional</strong>, combinando niveles jerárquicos
+              clásicos (Consejo Directivo, Gerencias, Departamentos) con áreas técnicas transversales como Sistemas y
+              Auditoría Médica. Dentro de este esquema se destacan dos procesos de negocio centrales:
+            </p>
+            <ul>
+              <li>
+                <strong>Orden de Consulta</strong>: Emisión, validación de afiliado y profesional, control de
+                elegibilidad y registro de la orden.
+              </li>
+              <li>
+                <strong>Turno Centro Médico</strong>: Solicitud de turno, verificación de disponibilidad, confirmación,
+                reprogramación y registro de asistencia.
+              </li>
+            </ul>
+          </article>
+
+          <aside class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Organigrama y BPD del Negocio</h3>
+                <p class="card-subtitle">
+                  Representación estructural y flujo BPMN de Orden de Consulta + Turnos.
+                </p>
+              </div>
+            </div>
+
+            <p>
+              El organigrama presenta cinco niveles jerárquicos y diferentes criterios de departamentalización
+              (por grupos de trabajo y por tipo de usuario), permitiendo que áreas como Centro Médico y Auditoría
+              interactúen de forma coordinada.
+            </p>
+
+            <div class="diagram-container">
+              <img src="organigrama.png" alt="Organigrama" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Organigrama de la Empresa
+            </p>
+
+            <p>
+              Este BPD muestra cómo el sistema valida la elegibilidad, controla duplicidad, gestiona turnos y, si es
+              necesario, deriva a Auditoría Médica manteniendo la trazabilidad del proceso.
+            </p>
+
+            <div class="diagram-container">
+              <img src="BPD1.png" alt="BPD Antiguo" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              BPD del Proceso Orden de Consulta
+            </p>
+
+            <div class="diagram-container">
+              <img src="BPD2.png" alt="BPD Antiguo" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              BPD del Proceso Gestión de Turnos Médicos
+            </p>
+
+          </aside>
+        </div>
+      </section>
+
+      <!-- SEGUNDA ETAPA ---------------------------------------------------- -->
+      <section id="segunda-etapa" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Segunda Etapa
+          </div>
+          <h2 class="section-title">Documento Visión + Especificación Complementaria</h2>
+          <p class="section-subtitle">
+            Definición del propósito del sistema, stakeholders, usuarios, reglas de negocio y requisitos no funcionales
+            que condicionan la solución Prensa Net.
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Documento Visión</h3>
+                <p class="card-subtitle">Propósito, alcance, problema y actores del sistema de información.</p>
+              </div>
+            </div>
+
+            <h4>Propósito y alcance</h4>
+            <p>
+              El sistema está orientado a optimizar la <strong>gestión médica y prestacional</strong> de la Obra Social de
+              Prensa. Incluye:
+            </p>
+            <ul>
+              <li>Emisión y control de órdenes de consulta.</li>
+              <li>Gestión de turnos médicos en el centro asistencial propio.</li>
+              <li>Registro digital de auditorías médicas.</li>
+              <li>Integración entre el área de Sistemas y el Centro Médico.</li>
+            </ul>
+
+            <h4>Problema / oportunidad</h4>
+            <p>
+              El punto de partida es la existencia de <strong>procesos manuales y poco integrados</strong> en la gestión de
+              órdenes y turnos, lo que genera demoras, errores y escasa trazabilidad. La solución planteada es un
+              sistema digital que centralice la información y automatice reglas de negocio.
+            </p>
+
+            <h4>Visión general del producto</h4>
+            <p>
+              Prensa Net se concibe como un <strong>producto integral de gestión prestacional</strong> que unifica en una misma
+              plataforma los circuitos de afiliados, centro médico y auditoría. Desde la perspectiva del Documento Visión,
+              el producto se organiza en módulos claramente identificables:
+            </p>
+            <ul>
+              <li>
+                <strong>Módulo de Afiliados:</strong> consulta de datos personales, estado de cuenta, historial de órdenes y
+                turnos, y autoservicio para solicitar nuevas prestaciones.
+              </li>
+              <li>
+                <strong>Módulo de Órdenes de Consulta:</strong> motor de reglas que verifica elegibilidad, evita duplicidades
+                y registra cada emisión con trazabilidad completa.
+              </li>
+              <li>
+                <strong>Módulo de Turnos Centro Médico:</strong> agenda unificada de profesionales, disponibilidad en tiempo real
+                y confirmaciones con notificaciones al afiliado.
+              </li>
+              <li>
+                <strong>Módulo de Auditoría Médica:</strong> administración de órdenes con requisitos especiales, dictámenes y
+                seguimiento de alto costo o prácticas complejas.
+              </li>
+              <li>
+                <strong>Módulos de soporte (Facturación, Farmacia, Tesorería):</strong> consumo de la misma base de datos
+                para cerrar el circuito administrativo y contable.
+              </li>
+            </ul>
+            <p>
+              Desde esta visión, el sistema se implementa como una solución web multi-rol, con pantallas simplificadas para
+              afiliados y vistas más completas para operadores y auditores, asegurando consistencia entre lo modelado en
+              el negocio y lo que ve el usuario final.
+            </p>
+
+            <h4>Stakeholders y usuarios</h4>
+            <p>
+              Se identifican tanto <strong>no usuarios</strong> (Consejo Directivo, Gerencias, Analistas de Sistemas,
+              organismos reguladores y prestadores externos) como <strong>usuarios directos</strong>:
+            </p>
+            <ul>
+              <li>Afiliados (autoservicio de órdenes y turnos).</li>
+              <li>Recepción / Admisión y Call Center.</li>
+              <li>Personal del Centro Médico (médicos, coordinación, recepción).</li>
+              <li>Área de Auditoría Médica.</li>
+              <li>Facturación, Tesorería y Farmacia propia.</li>
+              <li>Equipo de Desarrollo y Soporte de Sistemas.</li>
+            </ul>
+
+            <p class="mt-6">
+              El sistema propone un <strong>repositorio maestro</strong> de afiliados, órdenes y turnos, un motor de reglas
+              configurable y portales diferenciados por rol, con control de acceso basado en roles (RBAC).
+            </p>
+
+            <div class="diagram-container">
+              <img src="diagramadebloques.png" alt="Diagrama de Bloques" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Diagrama de Bloques
+            </p>
+
+          </article>
+          
+
+          <aside class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Especificación Complementaria</h3>
+                <p class="card-subtitle">Reglas de dominio, FURPS+ y procesos clave.</p>
+              </div>
+            </div>
+
+            <h4>Reglas del dominio (R01 – R06)</h4>
+            <ul>
+              <li><strong>R01</strong>: El afiliado debe tener datos actualizados y cuota al día para solicitar órdenes.</li>
+              <li><strong>R02</strong>: Toda orden debe estar asociada a un profesional validado en el sistema.</li>
+              <li><strong>R03</strong>: No se permiten órdenes duplicadas para la misma especialidad en un período.</li>
+              <li><strong>R04</strong>: Los turnos no pueden superponerse en la agenda del profesional.</li>
+              <li><strong>R05</strong>: El afiliado puede reprogramar, pero no mantener dos turnos activos por especialidad.</li>
+              <li><strong>R06</strong>: Las auditorías médicas deben registrar digitalmente solicitudes, validaciones y dictámenes.</li>
+            </ul>
+
+            <h4>Requisitos no funcionales (FURPS+)</h4>
+            <ul>
+              <li><strong>Usabilidad:</strong> interfaces diferenciadas por rol, autoservicio intuitivo para afiliados.</li>
+              <li><strong>Fiabilidad:</strong> registro inmutable de eventos y trazabilidad obligatoria.</li>
+              <li><strong>Rendimiento:</strong> respuesta ágil en consultas de agenda y disponibilidad.</li>
+              <li><strong>Seguridad:</strong> control de accesos por rol, manejo seguro de datos clínicos.</li>
+              <li><strong>Soporte:</strong> uso de herramientas estándar, documentación y ayuda asociada.</li>
+            </ul>
+
+            <div class="diagram-container">
+              <img src="bpdnuevo.png" alt="BPD Actualizado" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              BPD Actualizado
+            </p>
+
+          </aside>
+        </div>
+      </section>
+
+      <!-- TERCERA ETAPA ---------------------------------------------------- -->
+      <section id="tercera-etapa" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Tercera Etapa
+          </div>
+          <h2 class="section-title">Proceso Unificado</h2>
+          <p class="section-subtitle">
+            Construcción del modelo del sistema bajo Proceso Unificado: casos de uso, modelo del dominio, diagramas
+            de secuencia, contratos, diagrama de estados y modelo de análisis.
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Fase de Inicio &amp; Elaboración</h3>
+                <p class="card-subtitle">Casos de uso, contratos y modelo del dominio.</p>
+              </div>
+            </div>
+
+            <h4>Introducción al Proceso Unificado</h4>
+            <p>
+              El documento de Proceso Unificado organiza el desarrollo del sistema en fases. La
+              <strong>Fase de Inicio</strong> define los
+              <em>Casos de Uso</em> centrales (Emitir orden de consulta, Gestionar turnos médicos, Autorizar prestación médica)
+              y su diagrama consolidado.
+            </p>
+
+            <h4>Casos de uso principales</h4>
+            <ul>
+              <li>
+                <strong>CU01 – Emisión de Orden de Consulta:</strong> describe cómo el afiliado o el personal de recepción
+                solicita una orden para una especialidad determinada. El sistema valida la elegibilidad del afiliado,
+                comprueba que no existan órdenes duplicadas y registra la nueva orden en estado pendiente, aprobada o
+                derivada a auditoría según las reglas del dominio.
+              </li>
+              <li>
+                <strong>CU02 – Solicitud de Turno en Centro Médico:</strong> se centra en la elección del profesional,
+                fecha y horario dentro de una agenda centralizada. El caso de uso contempla la verificación de
+                disponibilidad del médico, el bloqueo del horario seleccionado, la confirmación del turno y la
+                posibilidad de reprogramación controlada.
+              </li>
+              <li>
+                <strong>CU03 – Gestión de Auditoría Médica:</strong> modela el circuito que siguen las órdenes especiales
+                o de alto costo. El auditor analiza la información clínica, solicita estudios complementarios si es
+                necesario, registra su dictamen (aprobada, rechazada o con observaciones) y deja evidencia digital de
+                cada decisión.
+              </li>
+            </ul>
+
+            <h4>Modelo del Dominio</h4>
+            <p>
+              El <strong>Modelo del Dominio</strong> identifica entidades como Afiliado, Orden de Consulta, Turno, Centro
+              Médico, Auditoría Médica, Prestador Médico y Facturación, así como sus asociaciones (por ejemplo, una
+              Orden genera cero o más Turnos; una Auditoría se vincula a una única Orden de Consulta, etc.). Este
+              modelo sirve de base para los diagramas de clases de diseño.
+            </p>
+
+            <h4>Contratos de operaciones (CO1 y CO2)</h4>
+            <p>
+              Los contratos especifican el comportamiento interno de operaciones críticas y reafirman las reglas del
+              dominio:
+            </p>
+            <ul>
+              <li>
+                <strong>CO1 – EmitirOrden:</strong> define la operación que crea una nueva orden de consulta. Contempla
+                precondiciones como “afiliado elegible” y “sin orden duplicada para la misma especialidad”, y
+                postcondiciones como “orden registrada con número único y estado inicial asignado”.
+              </li>
+              <li>
+                <strong>CO2 – AsignarEstadoOrden:</strong> determina cómo la orden cambia de estado (Pendiente, Aprobada,
+                Rechazada, Finalizada, En Auditoría). El contrato detalla qué datos se actualizan, quién puede ejecutar
+                la operación (rol) y qué eventos quedan trazados para fines de auditoría.
+              </li>
+            </ul>
+            <p>
+              Estos contratos no se representan como imágenes aisladas, sino como texto estructurado que se integra al
+              resto de los artefactos del Proceso Unificado, asegurando coherencia entre modelo de dominio, secuencias
+              y diagrama de estados.
+            </p>
+          </article>
+
+          <aside class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Espacios para diagramas UML</h3>
+                <p class="card-subtitle">Inserción de modelos UML y artefactos de análisis.</p>
+              </div>
+            </div>
+
+            <div class="diagram-container">
+              <img src="diagramaCU.png" alt="Diagrama de Casos de Uso" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Diagrama de Casos de Uso
+            </p>
+
+
+            <div class="diagram-container">
+              <img src="diagramaCU1.png" alt="Diagrama de Caso de Uso 01" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Diagrama de Secuencia CU01
+            </p>
+
+
+            <div class="diagram-container">
+              <img src="diagramaCU2.png" alt="Diagrama de Caso de Uso 02" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Diagrama de Secuencia CU02
+            </p>
+
+            <div class="diagram-container">
+              <img src="modelodedominio.png" alt="Modelo de Dominio" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Modelo de Dominio
+            </p>
+
+            <div class="diagram-container">
+              <img src="modelodeanalisis.png" alt="Modelo de Análisis" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Modelo de Análisis
+            </p>
+
+            <div class="diagram-container">
+              <img src="diagramatransicion.png" alt="Diagrama de Transicion de estados" class="diagram-image">
+            </div>
+            <p class="mt-6 muted">
+              Diagrama de transición de estados
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CUARTA ETAPA ----------------------------------------------------- -->
+      <section id="cuarta-etapa" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Cuarta Etapa
+          </div>
+          <h2 class="section-title">Informe de Viabilidad</h2>
+          <p class="section-subtitle">
+            Evaluación de viabilidad técnica, económica, operativa y de gestión del proyecto, incluyendo costos
+            estimados y conclusiones finales.
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Viabilidad técnica &amp; operativa</h3>
+                <p class="card-subtitle">Recursos de hardware, software y adopción organizacional.</p>
+              </div>
+            </div>
+
+            <h4>Viabilidad técnica</h4>
+            <p>
+              La Obra Social de Prensa cuenta con la infraestructura necesaria para implementar un sistema
+              multiplataforma (web, móvil y escritorio) basado en hardware ya disponible y servicios de hosting
+              compartido de bajo costo. Se contemplan PC de escritorio, dispositivos móviles Android, impresoras,
+              escáner y una red LAN con acceso a internet.
+            </p>
+            <p>
+              A nivel software se propone el uso de Windows 10, tecnologías como Java / JavaScript (React, Node.js,
+              Kotlin), base de datos MySQL y Firebase, y herramientas de seguridad como antivirus corporativo.
+            </p>
+
+            <h4>Viabilidad operativa</h4>
+            <p>
+              Entrevistas al personal indican una <strong>predisposición favorable</strong> a capacitarse y utilizar el sistema.
+              La solución propuesta es intuitiva, accesible desde computadoras y celulares, y reduce tiempos de carga,
+              evitando duplicidad de información y mejorando la comunicación interna.
+            </p>
+
+            <h4>Gestión del proyecto &amp; riesgos</h4>
+            <p>
+              El proyecto contempla un estudio de riesgos (tecnológicos, personales, organizacionales, de
+              requerimientos y de herramientas) y un cronograma representado en un diagrama de Gantt, que
+              estructura las fases desde el análisis hasta la transición a producción.
+            </p>
+
+            <p class="mt-6 muted">
+              La conclusión del informe destaca que el sistema propuesto no solo moderniza la gestión, sino que
+              respeta los principios de accesibilidad de la Obra Social y se encuentra listo para pasar a la etapa de
+              desarrollo.
+            </p>
+          </article>
+
+          <aside class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Viabilidad económica – Tablas HTML</h3>
+                <p class="card-subtitle">Resumen de costos de hardware, software, desarrollo y personal.</p>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="4">2.1 Estimación de Costos de Hardware</th>
+                  </tr>
+                  <tr>
+                    <th>Recurso</th>
+                    <th>Costos ($)</th>
+                    <th>Proveedor</th>
+                    <th>Garantía / Soporte</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Tecnologías de Entrada</td>
+                    <td>120.000</td>
+                    <td>HP / Genérico</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <td>Tecnologías de Salida</td>
+                    <td>100.000</td>
+                    <td>HP</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <td>Tecnologías de Procesamiento</td>
+                    <td>300.000</td>
+                    <td>Proveedor local</td>
+                    <td>6 meses</td>
+                  </tr>
+                  <tr>
+                    <td>Tecnologías de Almacenamiento</td>
+                    <td>60.000</td>
+                    <td>Kingston</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <td>Tecnologías de Comunicaciones</td>
+                    <td>45.000</td>
+                    <td>TP-Link</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <th>Total</th>
+                    <th>625.000</th>
+                    <th colspan="2"></th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-wrapper mt-6">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="4">2.2 Costos de Software a Adquirir</th>
+                  </tr>
+                  <tr>
+                    <th>Software</th>
+                    <th>Licencia ($)</th>
+                    <th>Cantidad</th>
+                    <th>Tiempo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sistema operativo (Windows 10)</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>Permanente</td>
+                  </tr>
+                  <tr>
+                    <td>Lenguaje de programación</td>
+                    <td>0</td>
+                    <td>-</td>
+                    <td>Permanente</td>
+                  </tr>
+                  <tr>
+                    <td>Antivirus / Windows Defender</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>Permanente</td>
+                  </tr>
+                  <tr>
+                    <td>MySQL Community Edition</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>Permanente</td>
+                  </tr>
+                  <tr>
+                    <td>Hosting compartido</td>
+                    <td>90.000</td>
+                    <td>1</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <td>Dominio web</td>
+                    <td>20.000</td>
+                    <td>1</td>
+                    <td>1 año</td>
+                  </tr>
+                  <tr>
+                    <th>Total</th>
+                    <th>110.000</th>
+                    <th colspan="2"></th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-wrapper mt-6">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="3">2.3 &amp; 2.4 Costos de Desarrollo y Personal</th>
+                  </tr>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Costo Total ($)</th>
+                    <th>Tiempo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Desarrollo e implantación del Sistema de Información</td>
+                    <td>400.000</td>
+                    <td>5 meses</td>
+                  </tr>
+                  <tr>
+                    <td>Equipo de Desarrollo (gestor, ingenieros, analistas, programadores, arquitecto, usuarios)</td>
+                    <td>610.000</td>
+                    <td>Hasta 5 meses</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="mt-6 muted">
+              Las cifras reflejan una inversión moderada, priorizando reutilización de equipos y
+              software libre, lo que refuerza la <strong>viabilidad económica</strong> del proyecto.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PROTOTIPOS NO OPERACIONALES -------------------------------------- -->
+      <section id="prototipos" class="section">
+        <div class="section-header">
+          <div class="section-label">
+            <span class="section-label-dot"></span>
+            Prototipos
+          </div>
+          <h2 class="section-title">Prototipos</h2>
+          <p class="section-subtitle">
+            En esta sección se integran los prototipos.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Vista integrada de los prototipos</h3>
+              <p class="card-subtitle">
+                La siguiente área contiene el diseño detallado
+                de las pantallas del sistema.
+              </p>
+            </div>
+            <span class="badge-soft">Prototipos UI</span>
+          </div>
+
+          <div class="diagram-placeholder" style="padding:0; min-height:auto; height:720px; background:#f4fbfb; border-style:solid;">
+            <iframe
+              src="index-prensa-v2.html"
+              title="Prototipos Prensa Net - index-prensa-v2"
+              style="border:0; width:100%; height:100%; border-radius:18px; overflow:hidden;"
+            ></iframe>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+  // ----- NAV ACTIVE STATE & TOGGLE (SPA-like navegación por secciones) ---
+  const navLinks = Array.from(document.querySelectorAll(".nav-main a"));
+  const sections = navLinks.map((link) => document.querySelector(link.getAttribute("href")));
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
+
+  menuToggle.addEventListener("click", () => {
+    mainNav.classList.toggle("open");
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mainNav.classList.remove("open");
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    const scrollPos = window.scrollY + 120;
+    sections.forEach((section, idx) => {
+      if (!section) return;
+      const top = section.offsetTop;
+      const bottom = top + section.offsetHeight;
+      if (scrollPos >= top && scrollPos < bottom) {
+        navLinks.forEach((l) => l.classList.remove("active"));
+        navLinks[idx].classList.add("active");
+      }
+    });
+  });
+</script>
+<script>
+  // ----- HERO TYPING EFFECT ----------------------------------------------
+  const typingElement = document.getElementById("heroTyping");
+
+  if (typingElement) {
+    const typingWords = [
+      "Trabajo Final Integrador"
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeLoop() {
+      const currentWord = typingWords[wordIndex];
+
+      if (!deleting) {
+        typingElement.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentWord.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1200);
+          return;
+        }
+      } else {
+        typingElement.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % typingWords.length;
+        }
+      }
+
+      const speed = deleting ? 60 : 90;
+      setTimeout(typeLoop, speed);
+    }
+
+    typeLoop();
+  }
+</script>
+</body>
+</html>
+
